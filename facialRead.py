@@ -22,6 +22,7 @@ def __draw_label(img, text, pos, bg_color):
 
 
 # Load a sample picture and learn how to recognize it.
+# for each image, load the image file and get an encoding.
 yang_image = face_recognition.load_image_file("faces/yang_zheng1.jpg")
 yang_face_encoding = face_recognition.face_encodings(yang_image)[0]
 aron_image = face_recognition.load_image_file("faces/aron.jpg")
@@ -30,6 +31,7 @@ jason_image = face_recognition.load_image_file("faces/jason.jpg")
 jason_face_encoding = face_recognition.face_encodings(jason_image)[0]
 
 
+#keep list of known encodings
 known_face_encodings = [
     yang_face_encoding,
     jason_face_encoding,
@@ -37,6 +39,7 @@ known_face_encodings = [
 
 ]
 
+# names for reference
 known_face_names = [
     "Yang Zheng",
     "Jason Wong",
@@ -48,9 +51,11 @@ face_encodings = []
 face_names = []
 process_this_frame = True
 
+#premade cascade from Intel that does facial detection
 cascPath = "haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
 
+#cameras 1, 2
 video_capture = cv2.VideoCapture(0)
 video_cap2 = cv2.VideoCapture(1)
 video_feed = [video_capture, video_cap2]
@@ -109,21 +114,18 @@ while True:
                         face_names.append(name)
 
                 process_this_frame = not process_this_frame
-
-
-
-    # Display the results
+    			# Display the results
                 for (top, right, bottom, left), name in zip(face_locations, face_names):
-        # Scale back up face locations since the frame we detected in was scaled to 1/4 size
+        			# Scale back up face locations since the frame we detected in was scaled to 1/4 size
                     top *= 4
                     right *= 4
                     bottom *= 4
                     left *= 4
 
-        # Draw a box around the face
+        			# Draw a box around the face
                     cv2.rectangle(frames[i], (left, top), (right, bottom), (0, 0, 255), 2)
 
-        # Draw a label with a name below the face
+        			# Draw a label with a name below the face
                     cv2.rectangle(frames[i], (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
                     font = cv2.FONT_HERSHEY_DUPLEX
                     cv2.putText(frames[i], name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
@@ -132,22 +134,18 @@ while True:
 
 
 
-
+            #if facial detection camera (in future, figure out a numbering scheme for them)
             if(i == 0):
-                #display count frame
+                #display count frames
                 for (x, y, w, h) in faces:
                     cv2.rectangle(frames[i], (x, y), (x+w, y+h), (0, 255, 0), 2)
                 __draw_label(frames[i], "No. People: {0}".format(len(faces)), (20,20), (255,255,255))
-            # Display the resulting frame
+            # Display the resulting frames
             cv2.imshow(video_names[i],frames[i]);
 
 
 
-
-    #cv2.imshow('Video', frame)
-
-    # Display the resulting frame
-
+    #if q pressed, terminate
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
