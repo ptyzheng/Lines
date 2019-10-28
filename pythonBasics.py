@@ -1,6 +1,7 @@
 import os
-import cv2
-import numpy as numpy
+#import cv2
+#import numpy as numpy
+import sys
 
 #create a def (similar to method in java)
 def example_def():
