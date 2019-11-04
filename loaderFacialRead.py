@@ -22,6 +22,12 @@ def __draw_label(img, text, pos, bg_color):
 
 
 def face_loader(path):
+    known_face_names = []
+    known_face_encodings = []
+    fp = path[2:]
+    for i in os.listdir(path):
+        known_face_names.append(face_recognition.load_image_file(path+i)) 
+        known_face_encodings.append(face_recognition.face_encodings(known_face_names)[0])
     return known_face_names, known_face_encodings
 
 path = './faces/'
