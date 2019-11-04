@@ -84,7 +84,7 @@ while True:
                 # Draw a rectangle around the faces
             
 
-            if i == 1:
+            if i == 0:
                 small_frame = cv2.resize(frames[i], (0, 0), fx=0.25, fy=0.25)
 
                 # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
@@ -135,7 +135,7 @@ while True:
 
 
             #if facial detection camera (in future, figure out a numbering scheme for them)
-            if(i == 0):
+            if i == 1:
                 #display count frames
                 for (x, y, w, h) in faces:
                     cv2.rectangle(frames[i], (x, y), (x+w, y+h), (0, 255, 0), 2)
