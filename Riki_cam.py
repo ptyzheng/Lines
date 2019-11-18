@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-friends = cv2.VideoCapture("20160128_152403.mp4")
+friends = cv2.VideoCapture(1)
 
 while True:
     ret,frame = friends.read()
